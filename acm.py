@@ -9,11 +9,12 @@ def download_bib(doi):
     url = "https://dl.acm.org/action/exportCiteProcCitation"
     payload = {"dois": doi, "targetFile": "custom-bibtex", "format": "bibTex"}
     r = requests.post(url, data=payload)
-    print()
-    bib = json.loads(r.text.strip())
-    style = html.unescape(bib["style"])
-    print(style)
-    items = [list(e.values())[0] for e in bib["items"]]
+    return json.loads(r.text.strip())
+
+
+def format_bib(resp):
+    style = html.unescape(resp["style"])
+    items = [list(e.values())[0] for e in resp["items"]]
     bib_source = citeproc.source.json.CiteProcJSON(items)
     with tempfile.TemporaryFile("w") as f:
         f.write(style)
@@ -21,10 +22,10 @@ def download_bib(doi):
         bib = citeproc.CitationStylesBibliography(
             bib_style, bib_source, citeproc.formatter.plain
         )
-        for item in bib.bibliography():
-            print(str(item))
+        return "\n".join([str(item) for item in bib.bibliography()])
 
 
 if __name__ == "__main__":
     print("Enter ACM DOI:")
-    download_bib(input())
+    resp = download_bib(input())
+    print(format_bib(resp))
