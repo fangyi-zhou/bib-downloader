@@ -11,3 +11,6 @@ citeproc-py = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+tests = "python -m unittest discover test"
