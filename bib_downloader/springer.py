@@ -1,16 +1,13 @@
 import requests
 
 
-def download_bib(doi):
+def download_bib(doi: str) -> str:
     url = f"https://citation-needed.springer.com/v2/references/{doi}"
     params = {"format": "bibtex", "flavour": "citation"}
-    print("Downloading bibtex file from:")
-    print(url)
     r = requests.get(url, params=params)
-    print()
-    print(r.text.strip())
+    return r.text.strip()
 
 
 if __name__ == "__main__":
     print("Enter Springer DOI:")
-    download_bib(input())
+    print(download_bib(input()))

@@ -1,18 +1,19 @@
 import requests
 import tempfile
 import json
-import citeproc
+import citeproc  # type: ignore
 import html
+from typing import Dict
 
 
-def download_bib(doi):
+def download_bib(doi: str) -> Dict:
     url = "https://dl.acm.org/action/exportCiteProcCitation"
     payload = {"dois": doi, "targetFile": "custom-bibtex", "format": "bibTex"}
     r = requests.post(url, data=payload)
     return json.loads(r.text.strip())
 
 
-def format_bib(resp):
+def format_bib(resp: Dict) -> str:
     style = resp["style"]
     items = [list(e.values())[0] for e in resp["items"]]
     # HACK: Make type lower case to avoid issues with case-sensitive string
