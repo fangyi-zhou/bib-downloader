@@ -34,7 +34,10 @@ def format_bib(resp: Dict) -> str:
         return "\n".join([str(item) for item in bib.bibliography()])
 
 
+def get_bib(doi: str) -> str:
+    resp = download_bib(doi)
+    return format_bib(resp)
+
+
 if __name__ == "__main__":
-    print("Enter ACM DOI:")
-    resp = download_bib(input())
-    print(format_bib(resp))
+    print(get_bib(input("Enter ACM DOI:")))
