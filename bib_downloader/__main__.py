@@ -6,12 +6,12 @@ from . import doi
 
 def main(args: List[str]) -> int:
     if len(args) == 0:
-        input = input("Enter an DOI")
+        arg = input("Enter an DOI: ")
     else:
-        input = args[0]
+        arg = args[0]
     # TODO: Better input handling
     try:
-        print(doi.process_input(input))
+        print(doi.process_input(arg))
         return 0
     except:
         return 1
