@@ -13,15 +13,23 @@ def download_bib(doi):
 
 
 def format_bib(resp):
-    style = html.unescape(resp["style"])
+    style = resp["style"]
     items = [list(e.values())[0] for e in resp["items"]]
+    # HACK: Make type lower case to avoid issues with case-sensitive string
+    # comparison
+    for item in items:
+        item["type"] = item["type"].lower()
     bib_source = citeproc.source.json.CiteProcJSON(items)
-    with tempfile.TemporaryFile("w") as f:
+    with tempfile.NamedTemporaryFile("w") as f:
         f.write(style)
-        bib_style = citeproc.CitationStylesStyle(f.name)
+        f.flush()
+        bib_style = citeproc.CitationStylesStyle(f.name, validate=False)
         bib = citeproc.CitationStylesBibliography(
             bib_style, bib_source, citeproc.formatter.plain
         )
+        for item in items:
+            citation = citeproc.Citation([citeproc.CitationItem(item["id"])])
+            bib.register(citation)
         return "\n".join([str(item) for item in bib.bibliography()])
 
 

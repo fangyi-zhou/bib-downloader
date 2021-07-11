@@ -3,7 +3,7 @@ import json
 import acm
 
 
-EXPECTED_OUTPUT = """ @article{10.1145/3428216,
+EXPECTED_OUTPUT = """@article{10.1145/3428216,
 author = {Zhou, Fangyi and Ferreira, Francisco and Hu, Raymond and Neykova, Rumyana and Yoshida, Nobuko},
 title = {Statically Verified Refinements for Multiparty Protocols},
 year = {2020},
@@ -34,14 +34,13 @@ journal = {Proc. ACM Program. Lang.},
 month = nov,
 articleno = {148},
 numpages = {30},
-keywords = {Multiparty Session Types (MPST), Code Generation, F*, Refinement Types, Distributed Programming}
-}
-"""
+keywords = {Multiparty Session Types (MPST), Refinement Types, Distributed Programming, F*, Code Generation}
+}"""
 
 INPUT = json.load(open("testdata/acm.json"))
 
 
 class AcmDownloadTestCase(unittest.TestCase):
-    @unittest.expectedFailure
     def test_example(self):
+        self.maxDiff = None
         self.assertEqual(acm.format_bib(INPUT), EXPECTED_OUTPUT)
