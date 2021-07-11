@@ -1,6 +1,6 @@
 import unittest
 import json
-import acm
+from bib_downloader import acm
 
 
 EXPECTED_OUTPUT = """@article{10.1145/3428216,
@@ -42,5 +42,4 @@ INPUT = json.load(open("testdata/acm.json"))
 
 class AcmDownloadTestCase(unittest.TestCase):
     def test_example(self):
-        self.maxDiff = None
         self.assertEqual(acm.format_bib(INPUT), EXPECTED_OUTPUT)
