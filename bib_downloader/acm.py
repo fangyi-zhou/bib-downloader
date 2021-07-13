@@ -10,6 +10,7 @@ def download_bib(doi: str) -> Dict:
     url = "https://dl.acm.org/action/exportCiteProcCitation"
     payload = {"dois": doi, "targetFile": "custom-bibtex", "format": "bibTex"}
     r = requests.post(url, data=payload)
+    r.encoding = "utf-8"
     return json.loads(r.text.strip())
 
 
