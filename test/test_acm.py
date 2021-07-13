@@ -1,4 +1,4 @@
-import unittest
+import pytest
 import json
 from bib_downloader import acm
 
@@ -40,6 +40,5 @@ keywords = {Multiparty Session Types (MPST), Refinement Types, Distributed Progr
 INPUT = json.load(open("testdata/acm.json"))
 
 
-class AcmDownloadTestCase(unittest.TestCase):
-    def test_example(self):
-        self.assertEqual(acm.format_bib(INPUT), EXPECTED_OUTPUT)
+def test_example_paper():
+    assert acm.format_bib(INPUT) == EXPECTED_OUTPUT

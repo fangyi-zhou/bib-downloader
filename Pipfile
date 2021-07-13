@@ -8,9 +8,10 @@ requests = "*"
 citeproc-py = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.9"
 
 [scripts]
-tests = "python -m unittest discover test"
+tests = "python -m pytest"
