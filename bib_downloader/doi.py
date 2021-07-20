@@ -6,9 +6,13 @@ def extract_doi(input: str) -> str:
     return input
 
 
+ACM_PREFIX = "10.1145"
+SPRINGER_PREFIX = "10.1007"
+
+
 PUBLISHER_LOOKUP = {
-    "10.1145": acm.get_bib,
-    "10.1007": springer.get_bib,
+    ACM_PREFIX: acm.get_bib,
+    SPRINGER_PREFIX: springer.get_bib,
 }
 
 
